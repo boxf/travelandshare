@@ -96,10 +96,5 @@ public enum Counties {
     HautsDeSeine_92,
     SeineStDenis_93,
     ValDeMarne_94,
-    ValDOise_95,
-    Guadeloupe_971,
-    Martinique_972,
-    Guyane_973,
-    LaRéunion_974,
-    Mayotte_976
+    ValDOise_95
 }
