@@ -91,5 +91,15 @@ public enum Counties {
     HauteVienne_87,
     Vosges_88,
     Yonne_89,
-
+    TerritoireDeBelfort_90,
+    Essonne_91,
+    HautsDeSeine_92,
+    SeineStDenis_93,
+    ValDeMarne_94,
+    ValDOise_95,
+    Guadeloupe_971,
+    Martinique_972,
+    Guyane_973,
+    LaRéunion_974,
+    Mayotte_976
 }
