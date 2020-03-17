@@ -1,4 +1,4 @@
-package com.projects.travelandshare.entity;
+package com.projects.travelandshare.model.entity;
 
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Place implements Serializable {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     private String name;
     private Counties county;
     private float grade;
@@ -34,11 +34,11 @@ public class Place implements Serializable {
     }
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
