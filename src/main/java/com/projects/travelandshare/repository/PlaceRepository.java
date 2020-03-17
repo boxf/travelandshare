@@ -11,17 +11,10 @@ import java.util.List;
 @Repository
 public interface PlaceRepository extends CrudRepository<Place, Long> {
 
+ Place findPlaceByGrade(float grade);
 
-  Place findPlaceById(Long id);
+ Place findPlaceByType (Types types);
 
-   Place findPlaceByGrade(float grade);
-
-   Place findPlaceByType (Types types);
-
-    List<Place>  findByCounty(Counties counties);
-
-    List<Place> findAll();
-
-    boolean deletePlaceById (Long id);
+ List<Place>  findByCounty(Counties counties);
 
 }
