@@ -14,6 +14,7 @@ import java.util.Optional;
 public class PlaceService {
     @Autowired
     private PlaceRepository placeRepository;
+    private Place place;
 
     public void registerPlace(Place place) {
         if(placeRepository.findPlaceByName(place.getName()) == null)
@@ -25,6 +26,12 @@ public class PlaceService {
     }
     public List<Place> findAllPlace (){
         List<Place> placeList = (List<Place>) placeRepository.findAll();
+        return placeList;
+    }
+
+
+    public List<Place> findPlaceByCounty(Counties counties){
+        List<Place> placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
 }
