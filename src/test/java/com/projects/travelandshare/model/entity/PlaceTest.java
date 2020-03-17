@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlaceTest {
 
     @Test
-    void setName() {
+    void testSetName_testGetName() {
     Place place = new Place();
     String resultExpected = "Calanques";
     place.setName("Calanques");
