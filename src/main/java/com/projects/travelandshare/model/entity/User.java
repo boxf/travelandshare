@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.List;
+
 @Entity
 public class User implements Serializable {
     @Id
@@ -12,4 +14,7 @@ public class User implements Serializable {
     private long id;
     private String lastName;
     private String firstName;
+    private String email;
+    private String password;
+//    private List<Place> placeList;
 }
