@@ -23,10 +23,6 @@ public class PlaceService {
 
         }
     }
-    public List<Place> findPlaceByCounty(Counties counties){
-        List<Place> placeList = placeRepository.findAllByCounty(counties);
-        return placeList;
-    }
     public List<Place> findAllPlace (){
         List<Place> placeList = (List<Place>) placeRepository.findAll();
         return placeList;

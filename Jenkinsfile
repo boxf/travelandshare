@@ -18,6 +18,6 @@ pipeline {
     }
 
 =======
->>>>>>> 3dfca50c0d1493951d2c1a6b237c7cef59b8ff8f
+>>>>>>> Added Jenkinsfile
   }
 }
