@@ -23,5 +23,4 @@ public class PlaceService {
         List<Place> placeList = (List<Place>) repository.findAll();
         return placeList;
     }
-
 }
