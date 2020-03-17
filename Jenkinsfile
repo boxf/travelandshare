@@ -7,6 +7,7 @@ pipeline {
       }
     }
 
+<<<<<<< HEAD
     stage('sonar analysis') {
       steps {
         withSonarQubeEnv('Sonar_TravelNShare') {
@@ -16,5 +17,7 @@ pipeline {
       }
     }
 
+=======
+>>>>>>> Added Jenkinsfile
   }
 }
