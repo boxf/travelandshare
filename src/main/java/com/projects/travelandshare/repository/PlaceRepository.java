@@ -15,6 +15,6 @@ public interface PlaceRepository extends CrudRepository<Place, Long> {
 
  Place findPlaceByType (Types types);
 
- List<Place>  findByCounty(Counties counties);
+ List<Place>  findAllByCounty(Counties counties);
 
 }
