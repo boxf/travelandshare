@@ -10,7 +10,7 @@ pipeline {
     stage('sonar analysis') {
       steps {
         withSonarQubeEnv('Sonar_TravelNShare') {
-          bat(script: 'mvn sonar:sonar', returnStdout: true)
+          bat 'mvn clean deploy sonar:sonar'
         }
 
       }
