@@ -6,8 +6,6 @@ pipeline {
         echo 'Trying to add stuff'
       }
     }
-
-<<<<<<< HEAD
     stage('sonar analysis') {
       steps {
         withSonarQubeEnv('Sonar_TravelNShare') {
@@ -16,8 +14,5 @@ pipeline {
 
       }
     }
-
-=======
->>>>>>> Added Jenkinsfile
   }
 }
