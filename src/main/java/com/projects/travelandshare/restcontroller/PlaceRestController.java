@@ -25,6 +25,11 @@ public class PlaceRestController {
      */
     @Autowired
     private PlaceService placeService;
+    List<Place> placeList;
+
+    public PlaceRestController (PlaceService placeService){
+        this.placeService=placeService;
+    }
 
 
     /**
@@ -49,6 +54,16 @@ public class PlaceRestController {
     public List<Place> getAllPlace() {
         List<Place> placeList = placeService.findAllPlace();
         return placeList;
+    }
+
+    @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace) throws ConflictException {
+        try {
+            placeService.registerPlace(newPlace);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (ConflictException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
 }

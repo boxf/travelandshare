@@ -3,7 +3,7 @@ package com.projects.travelandshare.repository;
 import com.projects.travelandshare.model.entity.Place;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -36,5 +36,7 @@ public interface PlaceRepository extends CrudRepository<Place, Long> {
   * @return a list of places
   */
  List<Place>  findAllByCounty(Counties counties);
+
+ Place findPlaceByName(String name);
 
 }

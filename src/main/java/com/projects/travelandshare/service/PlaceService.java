@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * A service classe which defines the required method on Place
  */
+
 @Service
 public class PlaceService {
 
@@ -18,8 +19,16 @@ public class PlaceService {
      * Dependencies injection of PlaceRepository
      */
     @Autowired
-    private PlaceRepository repository;
+    private PlaceRepository placeRepository;
+    List<Place> placeList;
 
+    public void registerPlace(Place place) {
+        if(placeRepository.findPlaceByName(place.getName()) == null)
+            this.placeRepository.save(place);
+        else{
+            throw new ConflictException();
+        }
+    }
 
     /**
      * Used to find a list of places thanks to theirs counties in the dataBase
@@ -28,8 +37,15 @@ public class PlaceService {
      * @author Dambrine François
      */
     public List<Place> findPlaceByCounty(Counties counties){
-        List<Place> placeList = repository.findAllByCounty(counties);
+        List<Place> placeList = placeRepository.findAllByCounty(counties);
         return placeList;
+    public void registerPlace(Place place) {
+        if(placeRepository.findPlaceByName(place.getName()) == null)
+        this.placeRepository.save(place);
+        else{
+            throw new ConflictException();
+
+        }
     }
 
     /**
