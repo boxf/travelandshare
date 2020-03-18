@@ -3,7 +3,7 @@ package com.projects.travelandshare.repository;
 import com.projects.travelandshare.model.entity.Place;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

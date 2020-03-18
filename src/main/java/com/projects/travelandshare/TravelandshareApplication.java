@@ -1,8 +1,7 @@
 package com.projects.travelandshare;
 
 import com.projects.travelandshare.model.entity.Place;
-import com.projects.travelandshare.repository.PlaceRepository;
-import com.projects.travelandshare.repository.UserRepository;
+
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
@@ -11,8 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
-import java.util.Optional;
+
 
 @SpringBootApplication
 public class TravelandshareApplication {

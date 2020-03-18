@@ -1,8 +1,7 @@
 package com.projects.travelandshare.restcontroller;
 
 import com.projects.travelandshare.model.entity.Place;
-import com.projects.travelandshare.model.entity.User;
-import com.projects.travelandshare.repository.PlaceRepository;
+
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
@@ -20,6 +19,7 @@ public class PlaceRestController {
 
     @Autowired
     private PlaceService placeService;
+    List<Place> placeList;
 
     public PlaceRestController (PlaceService placeService){
         this.placeService=placeService;
@@ -28,13 +28,13 @@ public class PlaceRestController {
 
     @RequestMapping("/place/{counties}")
     List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties) {
-        List<Place> placeList = placeService.findPlaceByCounty(counties);
+        placeList = placeService.findPlaceByCounty(counties);
         return placeList;
     }
 
     @RequestMapping("/places")
     public List<Place> getAllPlace() {
-        List<Place> placeList = placeService.findAllPlace();
+        placeList = placeService.findAllPlace();
         return placeList;
     }
 

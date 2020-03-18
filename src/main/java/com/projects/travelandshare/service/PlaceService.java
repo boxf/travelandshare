@@ -8,13 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class PlaceService {
     @Autowired
     private PlaceRepository placeRepository;
-    private Place place;
+    List<Place> placeList;
+
 
     public void registerPlace(Place place) {
         if(placeRepository.findPlaceByName(place.getName()) == null)
@@ -25,13 +26,13 @@ public class PlaceService {
         }
     }
     public List<Place> findAllPlace (){
-        List<Place> placeList = (List<Place>) placeRepository.findAll();
+        placeList = (List<Place>) placeRepository.findAll();
         return placeList;
     }
 
 
     public List<Place> findPlaceByCounty(Counties counties){
-        List<Place> placeList = placeRepository.findAllByCounty(counties);
+        placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
 }
