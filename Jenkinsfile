@@ -6,6 +6,7 @@ pipeline {
         echo 'Trying to add stuff'
       }
     }
+
     stage('sonar analysis') {
       steps {
         withSonarQubeEnv('Sonar_TravelNShare') {
@@ -14,5 +15,6 @@ pipeline {
 
       }
     }
+
   }
 }
