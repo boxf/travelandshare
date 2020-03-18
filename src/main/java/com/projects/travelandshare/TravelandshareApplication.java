@@ -21,18 +21,18 @@ public class TravelandshareApplication {
         SpringApplication.run(TravelandshareApplication.class, args);
 
     }
-    @Bean
-    public CommandLineRunner demo (PlaceService placeService){
-        return (args)->{
-            placeService.registerPlace(new Place ("CrazyClimbing", Counties.AlpesMaritimes_06, Types.lowMountain,
-                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
-            placeService.registerPlace(new Place ("MonsterFood", Counties.AlpesMaritimes_06, Types.lowMountain,
-                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
+//    @Bean
+//    public CommandLineRunner demo (PlaceService placeService){
+//        return (args)->{
 //            placeService.registerPlace(new Place ("CrazyClimbing", Counties.AlpesMaritimes_06, Types.lowMountain,
 //                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
-
-
-        };
-    }
+//            placeService.registerPlace(new Place ("MonsterFood", Counties.AlpesMaritimes_06, Types.lowMountain,
+//                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
+////            placeService.registerPlace(new Place ("CrazyClimbing", Counties.AlpesMaritimes_06, Types.lowMountain,
+////                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
+//
+//
+//        };
+//    }
 
 }
