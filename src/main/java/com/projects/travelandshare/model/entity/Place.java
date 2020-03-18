@@ -34,8 +34,6 @@ public class Place implements Serializable {
         this.pictureName=newPictureName;
     }
 
-
-
     public long getId() {
         return id;
     }
