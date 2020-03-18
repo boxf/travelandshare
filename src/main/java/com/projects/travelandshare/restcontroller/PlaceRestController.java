@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -39,10 +40,16 @@ public class PlaceRestController {
     }
 
     @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace) throws ConflictException {
+    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace, @RequestParam("pictureName")MultipartFile file) throws ConflictException {
         try {
-            placeService.registerPlace(newPlace);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            if(file!= null && !file.isEmpty()){
+                placeService.registerPlace(newPlace, file);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            } else {
+                placeService.registerPlace(newPlace);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            }
+
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
