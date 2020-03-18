@@ -22,13 +22,10 @@ public class TravelandshareApplication {
     @Bean
     public CommandLineRunner demo (PlaceService placeService){
         return (args)->{
-            placeService.registerPlace(new Place ("CrazyClimbing", Counties.AlpesMaritimes_06, Types.lowMountain,
+            placeService.registerPlace(new Place ("CrazyClimbing", Counties.ALPESMARITIMES_06, Types.LOWMOUNTAIN,
                     0.5454, 4.89595, "abeautifulphto.jpeg" ));
-            placeService.registerPlace(new Place ("MonsterFood", Counties.AlpesMaritimes_06, Types.lowMountain,
+            placeService.registerPlace(new Place ("MonsterFood", Counties.ALPESMARITIMES_06, Types.LOWMOUNTAIN,
                     0.5454, 4.89595, "abeautifulphto.jpeg" ));
-//            placeService.registerPlace(new Place ("CrazyClimbing", Counties.AlpesMaritimes_06, Types.lowMountain,
-//                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
-
 
         };
     }
