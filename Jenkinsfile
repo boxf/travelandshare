@@ -31,6 +31,7 @@ pipeline {
 
 
           stage ('Download Code') {
+			steps{
               echo "Tag selected: ${gitTAG}"
 
               def GIT_REPO='https://github.com/boxf/travelandshare.git'
@@ -48,11 +49,13 @@ pipeline {
               echo "\u2600 BUILD_URL=${env.BUILD_URL}"
 
               echo "\u2600 workspace=${workspace}"
+			  }//steps end
           }
 
           def dockerTag='development'
 
           stage ('Build') {
+			steps{
               if (Boolean.valueOf(skipBuild)) {
                   echo "Build is skipped"
               } else {
@@ -60,9 +63,11 @@ pipeline {
                   def mvnHome = tool 'maven-3.6.3'
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
               }
+			  }//steps end
           }
 
           stage ('Unit Test') {
+		  steps{
               if (Boolean.valueOf(skipTests)) {
                   echo "Integration tests were skipped"
               } else {
@@ -70,6 +75,7 @@ pipeline {
                   def mvnHome = tool 'maven-3.6.3'
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
               }
+			  }//steps end
           }
           stage('Sonar test') {
                 steps {
