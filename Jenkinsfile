@@ -1,11 +1,10 @@
+
 def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
-}
+
   // Default values
-  def GIT_REPO='https://github.com/boxf/travelandshare.git'
-def mvnHome = tool 'maven-3.6.3'
-def dockerTag='development'
+
   def colorName = 'RED'
   def colorCode = '#FF0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
@@ -27,56 +26,18 @@ def dockerTag='development'
 
   // Send notifications
   slackSend (color: colorCode, message: summary)
+  }
 
 pipeline {
+environment{
+def GIT_REPO='https://github.com/boxf/travelandshare.git'
+def mvnHome = tool 'maven-3.6.3'
+def dockerTag='development'
+}
 
   agent any
-	node{
-          stage ('Download Code') {
-			steps{
-              echo "Tag selected: ${gitTAG}"
+	stages{
 
-              echo "Downloading code from: ${GIT_REPO}"
-
-              checkout([$class: 'GitSCM',
-                  branches: [[name: gitTAG]],
-                  doGenerateSubmoduleConfigurations: false,
-                  extensions: [[$class: 'CleanCheckout']],
-                  submoduleCfg: [],
-                  userRemoteConfigs: [[url: GIT_REPO]]
-              ])
-
-              echo "\u2600 BUILD_URL=${env.BUILD_URL}"
-
-              echo "\u2600 workspace=${workspace}"
-			  }//steps end
-          }
-
-          stage ('Build') {
-			steps{
-				script{
-					if (Boolean.valueOf(skipBuild)) {
-					echo "Build is skipped"
-              } else {
-                  echo "Building"
-                  bat "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
-              }
-			  } //script end
-			  }//steps end
-          }
-
-          stage ('Unit Test') {
-		  steps{
-			script {
-              if (Boolean.valueOf(skipTests)) {
-                  echo "Integration tests were skipped"
-              } else {
-                  echo "Unit testing"
-                  bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
-              }
-			  }script end
-			  }//steps end
-          }
           stage('Sonar test') {
                 steps {
                   withSonarQubeEnv('Sonar_TravelNShare') {
@@ -85,12 +46,15 @@ pipeline {
 
                 }
               }
-			stage('Notify successful') {
-				steps{
-					notifyBuild('SUCCESSFUL')
-				}
 			}
 
 
 	} //stages end
+	post{
+		success{
+		notifyBuild('SUCCESSFUL')
+		}
+		failure{
+		notifyBuild('ERROR')
+	}
   } //pipeline end
