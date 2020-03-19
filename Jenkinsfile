@@ -31,7 +31,7 @@ def dockerTag='development'
 pipeline {
 
   agent any
-	stages{
+	node{
           stage ('Download Code') {
 			steps{
               echo "Tag selected: ${gitTAG}"
