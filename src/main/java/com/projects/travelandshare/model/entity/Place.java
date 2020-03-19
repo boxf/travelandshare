@@ -25,13 +25,13 @@ public class Place implements Serializable {
     }
     public Place(String newName, double newXaxis, double newYaxis, String newPictureName) {
     }
-    public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis, String newPictureName){
+    public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis){
         this.name=newName;
         this.county=newCounty;
         this.type=newType;
         this.xaxis=newXaxis;
         this.yaxis=newYaxis;
-        this.pictureName=newPictureName;
+
     }
 
 

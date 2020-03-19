@@ -23,9 +23,9 @@ public class TravelandshareApplication {
     public CommandLineRunner demo (PlaceService placeService){
         return (args)->{
             placeService.registerPlace(new Place ("CrazyClimbing", Counties.ALPESMARITIMES_06, Types.LOWMOUNTAIN,
-                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
+                    0.5454, 4.89595));
             placeService.registerPlace(new Place ("MonsterFood", Counties.ALPESMARITIMES_06, Types.LOWMOUNTAIN,
-                    0.5454, 4.89595, "abeautifulphto.jpeg" ));
+                    0.5454, 4.89595 ));
 
         };
     }

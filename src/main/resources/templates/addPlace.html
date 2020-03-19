@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AddPlace</title>
+</head>
+<body>
+
+<form method="post" action="#"  th:action="@{/addPlaces}" th:object="${place}" enctype="multipart/form-data">
+    <p>Place name : <input th:type="text" th:field="*{name}"></p><br>
+    <p>County : <input th:type="text" th:field="*{county}"></p><br>
+    <p>Type of place : <input th:type ="text" th:field="*{type}"></p><br>
+    <p>X-axis : <input th:type="text" th:field="*{xaxis}"></p><br>
+    <p>Y-axis : <input th:type="text" th:field="*{yaxis}"></p><br>
+    <p>Photo : <input th:type="file" accept="images/png, images/jpg, images.svg" name="pictureName"></p>
+    <button type="submit">Submit</button>
+
+</form>
+</body>
+</html>

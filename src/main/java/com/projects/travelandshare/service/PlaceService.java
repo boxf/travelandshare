@@ -20,20 +20,22 @@ public class PlaceService {
     List<Place> placeList;
 
 
-    public void registerPlace(Place place) {
-        if (placeRepository.findPlaceByName(place.getName()) == null)
+    public Place registerPlace(Place place) {
+        if (placeRepository.findPlaceByName(place.getName()) == null){
             this.placeRepository.save(place);
+        return place;}
         else {
             throw new ConflictException();
 
         }
     }
 
-    public void registerPlace(Place place, MultipartFile file) {
+    public Place registerPlace(Place place, MultipartFile file) {
         if (placeRepository.findPlaceByName(place.getName()) == null) {
             this.storageService.savePicture(file);
             place.setPictureName(file.getOriginalFilename());
             this.placeRepository.save(place);
+            return place;
         } else {
             throw new ConflictException();
 

@@ -7,7 +7,9 @@ import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,8 +41,9 @@ public class PlaceRestController {
         return placeList;
     }
 
-    @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace, @RequestParam("pictureName")MultipartFile file) throws ConflictException {
+    @PostMapping(value = "/addPlaces")
+    public ResponseEntity<Object> addNewPlace(Place newPlace, @RequestPart(value ="pictureName",
+            required = false)MultipartFile file) throws ConflictException {
         try {
             if(file!= null && !file.isEmpty()){
                 placeService.registerPlace(newPlace, file);
@@ -53,6 +56,12 @@ public class PlaceRestController {
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
+    }
+    @GetMapping(value = "/addPlaces")
+    public String addForm(Place place, Model model) {
+        model.addAttribute("place", new Place());
+        return "addPlace";
+
     }
 
 }
