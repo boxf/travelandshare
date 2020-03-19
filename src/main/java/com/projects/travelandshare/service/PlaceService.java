@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -19,7 +19,6 @@ public class PlaceService {
     @Autowired
     private StorageService storageService;
     List<Place> placeList;
-//    Optional<Place> place;
 
 
     public void registerPlace(Place place) {
@@ -54,9 +53,4 @@ public class PlaceService {
         placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
-
-//    public Optional<Place> findById(Long id) {
-//        place= placeRepository.findById(id);
-//        return place;
-//    }
 }
