@@ -2,7 +2,6 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 }
-
   // Default values
   def colorName = 'RED'
   def colorCode = '#FF0000'
@@ -23,11 +22,11 @@ def notifyBuild(String buildStatus = 'STARTED') {
     colorCode = '#FF0000'
   }
 
-
   // Send notifications
   slackSend (color: colorCode, message: summary)
 pipeline {
   agent any
+  stages{
   try {
       node {
           stage ('Download Code') {
@@ -82,6 +81,7 @@ pipeline {
       } // node
       notifyBuild('SUCCESSFUL')
   } // try end
+  } //stages end
   catch (exc) {
      notifyBuild('ERROR')
   }
