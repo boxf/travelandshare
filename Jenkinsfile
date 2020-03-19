@@ -24,12 +24,12 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   // Send notifications
   slackSend (color: colorCode, message: summary)
+
 pipeline {
   agent any
-stages{
-script{
-  try {
-      node {
+	stages{
+
+
           stage ('Download Code') {
               echo "Tag selected: ${gitTAG}"
 
@@ -79,12 +79,7 @@ script{
 
                 }
               }
-      } // node
+
       notifyBuild('SUCCESSFUL')
-  } // try end
-  catch (exc) {
-     notifyBuild('ERROR')
-  }
-  } //script end
-} //stages end
-  }
+	} //stages end
+  } //pipeline end
