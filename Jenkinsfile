@@ -3,6 +3,9 @@ def notifyBuild(String buildStatus = 'STARTED') {
   buildStatus =  buildStatus ?: 'SUCCESSFUL'
 }
   // Default values
+  def GIT_REPO='https://github.com/boxf/travelandshare.git'
+def mvnHome = tool 'maven-3.6.3'
+def dockerTag='development'
   def colorName = 'RED'
   def colorCode = '#FF0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
@@ -26,16 +29,9 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (color: colorCode, message: summary)
 
 pipeline {
-environment {
-def GIT_REPO='https://github.com/boxf/travelandshare.git'
-def mvnHome = tool 'maven-3.6.3'
-def dockerTag='development'
 
-}
   agent any
 	stages{
-
-
           stage ('Download Code') {
 			steps{
               echo "Tag selected: ${gitTAG}"
