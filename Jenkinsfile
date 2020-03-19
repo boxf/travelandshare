@@ -58,12 +58,14 @@ def dockerTag='development'
 
           stage ('Build') {
 			steps{
-              if (Boolean.valueOf(skipBuild)) {
-                  echo "Build is skipped"
+				script{
+					if (Boolean.valueOf(skipBuild)) {
+					echo "Build is skipped"
               } else {
                   echo "Building"
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
               }
+			  } //script end
 			  }//steps end
           }
 
