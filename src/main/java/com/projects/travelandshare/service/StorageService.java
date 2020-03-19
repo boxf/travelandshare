@@ -13,6 +13,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+/**
+ * <b>Storage Service</b>
+ * This class is the service responsible for saving the picture in a file.
+ * It also fetches the image and forwards it to the ImageController.
+ * @author Cédric_P
+ * */
 @Service
 public class StorageService {
     private final Path rootLocation;
@@ -20,6 +26,12 @@ public class StorageService {
     public StorageService() {
         this.rootLocation = Paths.get("uploads");
     }
+    /**
+     * @param file is the image uploaded in the Angular form.
+     *             If the image already exists in the uploads file, then it replaces the existing image.
+     * @throws RuntimeException if an error occur, a RuntimeException is thrown/
+     *
+     * */
     public void savePicture(MultipartFile file){
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try (InputStream inputStream = file.getInputStream()){
@@ -28,6 +40,12 @@ public class StorageService {
             throw new RuntimeException("Failed to store file" + fileName, e);
         }
     }
+    /**
+     * @param fileName this parameter refers to the image name in the uploads file.
+     *                 if it exists it is fetched and returned to the ImageController.
+     * @throws RuntimeException if the image can't be fetched, then a RuntimeException is thrown
+     *
+     * */
     public Resource loadAsResource (String fileName){
         try{
             Path file = this.rootLocation.resolve(fileName);
