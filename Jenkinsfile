@@ -30,9 +30,12 @@ environment {
 def GIT_REPO='https://github.com/boxf/travelandshare.git'
 def mvnHome = tool 'maven-3.6.3'
 def dockerTag='development'
+
 }
   agent any
 	stages{
+
+
           stage ('Download Code') {
 			steps{
               echo "Tag selected: ${gitTAG}"
@@ -66,12 +69,14 @@ def dockerTag='development'
 
           stage ('Unit Test') {
 		  steps{
+			script {
               if (Boolean.valueOf(skipTests)) {
                   echo "Integration tests were skipped"
               } else {
                   echo "Unit testing"
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
               }
+			  }script end
 			  }//steps end
           }
           stage('Sonar test') {
@@ -82,7 +87,12 @@ def dockerTag='development'
 
                 }
               }
+			stage('Notify successful') {
+				steps{
+					notifyBuild('SUCCESSFUL')
+				}
+			}
 
-      notifyBuild('SUCCESSFUL')
+
 	} //stages end
   } //pipeline end
