@@ -26,15 +26,16 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (color: colorCode, message: summary)
 
 pipeline {
+environment {
+def GIT_REPO='https://github.com/boxf/travelandshare.git'
+def mvnHome = tool 'maven-3.6.3'
+def dockerTag='development'
+}
   agent any
 	stages{
-
-
           stage ('Download Code') {
 			steps{
               echo "Tag selected: ${gitTAG}"
-
-              def GIT_REPO='https://github.com/boxf/travelandshare.git'
 
               echo "Downloading code from: ${GIT_REPO}"
 
@@ -52,15 +53,12 @@ pipeline {
 			  }//steps end
           }
 
-          def dockerTag='development'
-
           stage ('Build') {
 			steps{
               if (Boolean.valueOf(skipBuild)) {
                   echo "Build is skipped"
               } else {
                   echo "Building"
-                  def mvnHome = tool 'maven-3.6.3'
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
               }
 			  }//steps end
@@ -72,7 +70,6 @@ pipeline {
                   echo "Integration tests were skipped"
               } else {
                   echo "Unit testing"
-                  def mvnHome = tool 'maven-3.6.3'
                   bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
               }
 			  }//steps end
