@@ -29,11 +29,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
 pipeline {
-environment{
-def GIT_REPO='https://github.com/boxf/travelandshare.git'
-def mvnHome = tool 'maven-3.6.3'
-def dockerTag='development'
-}
+
 
   agent any
 	stages{
