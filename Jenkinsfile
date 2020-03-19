@@ -26,66 +26,60 @@ def notifyBuild(String buildStatus = 'STARTED') {
   slackSend (color: colorCode, message: summary)
 pipeline {
   agent any
-  try{
-  stages {
-    stage('Add jenkinsfile to branches') {
-      steps {
-        echo 'Trying to add stuff'
-      }
-    }
+  try {
+      node {
+          stage ('Download Code') {
+              echo "Tag selected: ${gitTAG}"
 
-    stage('Sonar test') {
-      steps {
-        withSonarQubeEnv('Sonar_TravelNShare') {
-          bat 'mvn clean install sonar:sonar'
-        }
+              def GIT_REPO='https://github.com/boxf/travelandshare.git'
 
-      }
-    }
-stage ('Download Code') {
-            echo "Tag selected: ${gitTAG}"
+              echo "Downloading code from: ${GIT_REPO}"
 
-            def GIT_REPO='YOUR_URL_REPO_HERE'
+              checkout([$class: 'GitSCM',
+                  branches: [[name: gitTAG]],
+                  doGenerateSubmoduleConfigurations: false,
+                  extensions: [[$class: 'CleanCheckout']],
+                  submoduleCfg: [],
+                  userRemoteConfigs: [[url: GIT_REPO]]
+              ])
 
-            echo "Downloading code from: ${GIT_REPO}"
-            
-            checkout([$class: 'GitSCM',
-                branches: [[name: gitTAG]],
-                doGenerateSubmoduleConfigurations: false,
-                extensions: [[$class: 'CleanCheckout']],
-                submoduleCfg: [],
-                userRemoteConfigs: [[credentialsId: 'YOUR_CREDENTIALS_ID', url: GIT_REPO]]
-            ])
+              echo "\u2600 BUILD_URL=${env.BUILD_URL}"
 
-            echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+              echo "\u2600 workspace=${workspace}"
+          }
 
-            echo "\u2600 workspace=${workspace}"
-        }
+          def dockerTag='development'
 
-        def dockerTag='development'
+          stage ('Build') {
+              if (Boolean.valueOf(skipBuild)) {
+                  echo "Build is skipped"
+              } else {
+                  echo "Building"
+                  def mvnHome = tool 'maven-3.6.3'
+                  bat "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
+              }
+          }
 
-        stage ('Build') {
-            if (Boolean.valueOf(skipBuild)) {
-                echo "Build is skipped"
-            } else {
-                echo "Building"
-                def mvnHome = tool 'maven-3.3.9'
-                sh "cd ${workspace} && ${mvnHome}/bin/mvn clean install -DskipTests -Dbuild.number=${BUILD_NUMBER}"
-            }
-        }
+          stage ('Unit Test') {
+              if (Boolean.valueOf(skipTests)) {
+                  echo "Integration tests were skipped"
+              } else {
+                  echo "Unit testing"
+                  def mvnHome = tool 'maven-3.6.3'
+                  bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
+              }
+          }
+          stage('Sonar test') {
+                steps {
+                  withSonarQubeEnv('Sonar_TravelNShare') {
+                    bat 'mvn clean install sonar:sonar'
+                  }
 
-        stage ('Unit Test') {
-            if (Boolean.valueOf(skipTests)) {
-                echo "Integration tests were skipped"
-            } else {
-                echo "Unit testing"
-                def mvnHome = tool 'maven-3.3.9'
-                sh "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
-            }
-        }
+                }
+              }
+      } // node
+      notifyBuild('SUCCESSFUL')
+  } // try end
+  catch (exc) {
+     notifyBuild('ERROR')
   }
-  }
-  catch(exc) {
-   notifyBuild('ERROR')
-}
-}
