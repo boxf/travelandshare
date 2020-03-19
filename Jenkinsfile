@@ -65,7 +65,18 @@ pipeline {
 			  }//steps end
           }
 
-
+          stage ('Unit Test') {
+		  steps{
+			script {
+              if (Boolean.valueOf(skipTests)) {
+                  echo "Integration tests were skipped"
+              } else {
+                  echo "Unit testing"
+                  bat "cd ${workspace} && ${mvnHome}/bin/mvn surefire:test"
+              }
+			  }script end
+			  }//steps end
+          }
           stage('Sonar test') {
                 steps {
                   withSonarQubeEnv('Sonar_TravelNShare') {
