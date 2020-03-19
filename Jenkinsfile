@@ -29,6 +29,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
   }
 
 pipeline {
+
+
   agent any
 	stages{
 
@@ -39,7 +41,10 @@ pipeline {
                   }
 
                 }
-           }
+              }
+
+
+
 	} //stages end
 	post{
 		always{
@@ -51,4 +56,5 @@ pipeline {
 		failure{
 		notifyBuild('ERROR')
 	}
-  } //pipeline end
+  }
+  }//pipeline end
