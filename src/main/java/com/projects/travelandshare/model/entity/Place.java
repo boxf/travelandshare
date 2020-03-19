@@ -34,8 +34,6 @@ public class Place implements Serializable {
 
     }
 
-
-
     public long getId() {
         return id;
     }
