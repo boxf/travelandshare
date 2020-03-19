@@ -81,8 +81,8 @@ pipeline {
       } // node
       notifyBuild('SUCCESSFUL')
   } // try end
-  } //stages end
   catch (exc) {
      notifyBuild('ERROR')
   }
+  } //stages end
   }
