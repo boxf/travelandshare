@@ -16,8 +16,9 @@ import java.util.List;
  * RestController for Place. It permish to get back the information in the model and communicate with the view
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:4200/")
+
 public class PlaceRestController {
 
     /**
@@ -41,7 +42,7 @@ public class PlaceRestController {
     @RequestMapping("/place/{counties}")
     List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
         List<Place> placeList = placeService.findPlaceByCounty(counties);
-       return placeList;
+        return placeList;
     }
 
     /**
