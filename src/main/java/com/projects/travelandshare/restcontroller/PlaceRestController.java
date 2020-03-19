@@ -3,6 +3,7 @@ package com.projects.travelandshare.restcontroller;
 import com.projects.travelandshare.model.entity.Place;
 
 import com.projects.travelandshare.service.PlaceService;
+import com.projects.travelandshare.service.StorageService;
 import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class PlaceRestController {
 
     @Autowired
     private PlaceService placeService;
+    @Autowired
+    private StorageService storageService;
     List<Place> placeList;
 
     public PlaceRestController (PlaceService placeService){
@@ -41,9 +44,9 @@ public class PlaceRestController {
         return placeList;
     }
 
-    @PostMapping(value = "/addPlaces")
-    public ResponseEntity<Object> addNewPlace(Place newPlace, @RequestPart(value ="pictureName",
-            required = false)MultipartFile file) throws ConflictException {
+    @PostMapping(value = "/addPlaces", consumes ="multipart/form-data")
+    public ResponseEntity<Object> addNewPlace(@ModelAttribute Place newPlace, @RequestParam(value ="file",
+            required = false)MultipartFile file, Model model) throws ConflictException {
         try {
             if(file!= null && !file.isEmpty()){
                 placeService.registerPlace(newPlace, file);
@@ -54,14 +57,10 @@ public class PlaceRestController {
             }
 
         } catch (ConflictException e) {
+            model.addAttribute("error", "Already exists");
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-    @GetMapping(value = "/addPlaces")
-    public String addForm(Place place, Model model) {
-        model.addAttribute("place", new Place());
-        return "addPlace";
 
-    }
 
 }

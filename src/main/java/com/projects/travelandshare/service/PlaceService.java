@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -18,24 +19,25 @@ public class PlaceService {
     @Autowired
     private StorageService storageService;
     List<Place> placeList;
+//    Optional<Place> place;
 
 
-    public Place registerPlace(Place place) {
+    public void registerPlace(Place place) {
         if (placeRepository.findPlaceByName(place.getName()) == null){
             this.placeRepository.save(place);
-        return place;}
+        }
         else {
             throw new ConflictException();
 
         }
     }
 
-    public Place registerPlace(Place place, MultipartFile file) {
+    public void registerPlace(Place place, MultipartFile file) {
         if (placeRepository.findPlaceByName(place.getName()) == null) {
             this.storageService.savePicture(file);
             place.setPictureName(file.getOriginalFilename());
-            this.placeRepository.save(place);
-            return place;
+            this.registerPlace(place);
+
         } else {
             throw new ConflictException();
 
@@ -52,4 +54,9 @@ public class PlaceService {
         placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
+
+//    public Optional<Place> findById(Long id) {
+//        place= placeRepository.findById(id);
+//        return place;
+//    }
 }
