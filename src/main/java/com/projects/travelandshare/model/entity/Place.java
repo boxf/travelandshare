@@ -3,10 +3,7 @@ package com.projects.travelandshare.model.entity;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 public class Place implements Serializable {
@@ -14,8 +11,10 @@ public class Place implements Serializable {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Counties county;
     private float grade;
+    @Enumerated(EnumType.STRING)
     private Types type;
     private String pictureName;
     private String userReview;
@@ -23,6 +22,8 @@ public class Place implements Serializable {
     private double yaxis;
 
     public Place() {
+    }
+    public Place(String newName, double newXaxis, double newYaxis, String newPictureName) {
     }
     public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis, String newPictureName){
         this.name=newName;
@@ -32,7 +33,6 @@ public class Place implements Serializable {
         this.yaxis=newYaxis;
         this.pictureName=newPictureName;
     }
-
 
     public long getId() {
         return id;

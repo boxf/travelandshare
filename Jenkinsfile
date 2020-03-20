@@ -7,5 +7,14 @@ pipeline {
       }
     }
 
+    stage('Sonar test') {
+      steps {
+        withSonarQubeEnv('Sonar_TravelNShare') {
+          bat 'mvn clean install sonar:sonar'
+        }
+
+      }
+    }
+
   }
 }
