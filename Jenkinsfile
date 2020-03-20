@@ -50,7 +50,6 @@ pipeline {
 	post{
 		always{
         slackSend (color: '#FFFF00', message: "Incoming report")
-        bat 'javadoc:javadoc'
 		}
 		success{
 		notifyBuild('SUCCESSFUL')
