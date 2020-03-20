@@ -47,7 +47,7 @@ pipeline {
 	} //stages end  
 	post{
 		always{
-
+        slackSend (color: '#FFFF00', message: "Incoming report")
 		}
 		success{
 		notifyBuild('SUCCESSFUL')
