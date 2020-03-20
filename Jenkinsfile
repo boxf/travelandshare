@@ -8,10 +8,11 @@ def notifyBuild(String buildStatus = 'STARTED') {
   def colorName = 'RED'
   def colorCode = '#FF0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
+  def sonar_url="<p>Sonar_TravelNShare report is available at : https://cedricp.pagekite.me/</p>"
+  def summary = "${subject} (${env.BUILD_URL}) ${sonar_url}"
   def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
     <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>
-    <P>Sonar_TravelNShare report is available at : https://cedricp.pagekite.me/</p>"""
+    """
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -46,7 +47,7 @@ pipeline {
 	} //stages end  
 	post{
 		always{
-		notifyBuild('STARTED')
+
 		}
 		success{
 		notifyBuild('SUCCESSFUL')
