@@ -23,9 +23,9 @@ public class PlaceService {
     private PlaceRepository placeRepository;
     List<Place> placeList;
 
-    public void registerPlace(Place place) {
+    public Place registerPlace(Place place) {
         if(placeRepository.findPlaceByName(place.getName()) == null)
-            this.placeRepository.save(place);
+            return this.placeRepository.save(place);
         else{
             throw new ConflictException();
         }
