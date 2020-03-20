@@ -8,9 +8,12 @@ def notifyBuild(String buildStatus = 'STARTED') {
   def colorName = 'RED'
   def colorCode = '#FF0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
-  def summary = "${subject} (${env.BUILD_URL})"
+  def sonar_url="Sonar_TravelNShare report is available at : https://cedricp.pagekite.me/"
+  def sonar_id="Log in with Login:admin / Password:admin"
+  def summary = "${subject} (${env.BUILD_URL}) ${sonar_url} ${sonar_id}"
   def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
-    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>
+    """
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
@@ -27,13 +30,13 @@ def notifyBuild(String buildStatus = 'STARTED') {
   // Send notifications
   slackSend (color: colorCode, message: summary)
   }
-
+  
 pipeline {
 
 
-  agent any
+  agent any 
 	stages{
-
+          
           stage('Sonar test') {
                 steps {
                   withSonarQubeEnv('Sonar_TravelNShare') {
@@ -43,12 +46,10 @@ pipeline {
                 }
               }
 
-
-
-	} //stages end
+	} //stages end  
 	post{
 		always{
-		notifyBuild('STARTED')
+        slackSend (color: '#FFFF00', message: "Incoming report")
 		}
 		success{
 		notifyBuild('SUCCESSFUL')
@@ -56,5 +57,5 @@ pipeline {
 		failure{
 		notifyBuild('ERROR')
 	}
-  }
+  } 
   }//pipeline end
