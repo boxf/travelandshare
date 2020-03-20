@@ -119,8 +119,8 @@
                 <!-- Sonar/Jacoco integration. Note that these properties need to be defined outside the "coverage" profile
                 because we want to be to able to execute mvn sonar:sonar without passing a profile -->
                 <!-- Tells Sonar to use jacoco for coverage results -->
-                <sonar.projectKey>TravelAndShare</sonar.projectKey>
-                <sonar.projectName>TravelAndShare</sonar.projectName>
+                <sonar.projectKey>travelandshare</sonar.projectKey>
+                <sonar.projectName>travelandshare</sonar.projectName>
                 <sonar.projectVersion>${yearMonth}</sonar.projectVersion>
                 <sonar.language>java</sonar.language>
                 <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
