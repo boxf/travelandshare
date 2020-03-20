@@ -9,7 +9,8 @@ def notifyBuild(String buildStatus = 'STARTED') {
   def colorCode = '#FF0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
   def sonar_url="Sonar_TravelNShare report is available at : https://cedricp.pagekite.me/"
-  def summary = "${subject} (${env.BUILD_URL}) ${sonar_url}"
+  def sonar_id="Log in with Login:admin / Password:admin"
+  def summary = "${subject} (${env.BUILD_URL}) ${sonar_url} ${sonar_id}"
   def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
     <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>
     """
