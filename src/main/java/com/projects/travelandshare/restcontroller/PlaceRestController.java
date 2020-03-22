@@ -3,12 +3,16 @@ package com.projects.travelandshare.restcontroller;
 import com.projects.travelandshare.model.entity.Place;
 import com.projects.travelandshare.repository.PlaceRepository;
 import com.projects.travelandshare.service.PlaceService;
+import com.projects.travelandshare.service.StorageService;
 import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,9 +20,8 @@ import java.util.List;
  * RestController for Place. It permish to get back the information in the model and communicate with the view
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
-
+//@CrossOrigin(origins = "http://localhost:4200/")
 public class PlaceRestController {
 
     /**
@@ -26,6 +29,8 @@ public class PlaceRestController {
      */
     @Autowired
     private PlaceService placeService;
+    @Autowired
+    private StorageService storageService;
     List<Place> placeList;
 
     public PlaceRestController (PlaceService placeService){
@@ -40,8 +45,8 @@ public class PlaceRestController {
      * @author Dambrine François
      */
     @RequestMapping("/place/{counties}")
-    List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
-        List<Place> placeList = placeService.findPlaceByCounty(counties);
+    List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties) {
+        placeList = placeService.findPlaceByCounty(counties);
         return placeList;
     }
 
@@ -53,15 +58,22 @@ public class PlaceRestController {
      */
     @RequestMapping ("/places")
     public List<Place> getAllPlace() {
-        List<Place> placeList = placeService.findAllPlace();
+        placeList = placeService.findAllPlace();
         return placeList;
     }
 
-    @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace) throws ConflictException {
+    @PostMapping(value = "/addPlaces", consumes ="multipart/form-data")
+    public ResponseEntity<Object> addNewPlace(@ModelAttribute Place newPlace, @RequestParam(value ="file",
+            required = false)MultipartFile file, Model model) throws ConflictException {
         try {
-            placeService.registerPlace(newPlace);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            if(file!= null && !file.isEmpty()){
+                placeService.registerPlace(newPlace, file);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            } else {
+                placeService.registerPlace(newPlace);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            }
+
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
