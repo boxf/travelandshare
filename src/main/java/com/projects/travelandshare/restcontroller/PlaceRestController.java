@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * RestController for Place. It permish to get back the information in the model and communicate with the view
  */
-@RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@RestController
 @RequestMapping("/api")
 
 public class PlaceRestController {
@@ -57,7 +57,7 @@ public class PlaceRestController {
         return placeList;
     }
 
-    @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/place", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace) throws ConflictException {
         try {
             placeService.registerPlace(newPlace);
