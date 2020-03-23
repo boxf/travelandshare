@@ -1,7 +1,6 @@
 package com.projects.travelandshare.restcontroller;
 
 import com.projects.travelandshare.model.entity.Place;
-import com.projects.travelandshare.repository.PlaceRepository;
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.service.StorageService;
 import com.projects.travelandshare.service.exception.ConflictException;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * RestController for Place. It permish to get back the information in the model and communicate with the view
@@ -45,10 +45,22 @@ public class PlaceRestController {
      * @return a list of places on a HTTP page
      * @author Dambrine François
      */
-    @RequestMapping("/place/{counties}")
+    @RequestMapping("/places/{counties}")
     List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
         List<Place> placeList = placeService.findPlaceByCounty(counties);
         return placeList;
+    }
+
+    /**
+     *
+     * Method that return one place from the DB. It works with the url ".../api/place/id"
+     * @return the place with the corresponding id
+     * @author Boxebeld Frédéric
+     */
+    @RequestMapping("/place/{id}")
+    Optional<Place> getPlaceById(@PathVariable("id") Long id){
+        Optional<Place> place = placeService.findPlaceById(id);
+        return place;
     }
 
     /**

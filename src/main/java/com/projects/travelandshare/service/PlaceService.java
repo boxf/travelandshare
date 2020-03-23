@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -52,5 +52,10 @@ public class PlaceService {
     public List<Place> findPlaceByCounty(Counties counties) {
         placeList = placeRepository.findAllByCounty(counties);
         return placeList;
+    }
+
+    public Optional<Place> findPlaceById(Long id) {
+        Optional<Place> place = placeRepository.findById(id);
+        return place;
     }
 }
