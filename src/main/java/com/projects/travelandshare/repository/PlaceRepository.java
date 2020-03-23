@@ -39,4 +39,5 @@ public interface PlaceRepository extends CrudRepository<Place, Long> {
 
  Place findPlaceByName(String name);
 
+ Iterable<Place> findAll();
 }
