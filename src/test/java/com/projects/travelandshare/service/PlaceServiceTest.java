@@ -5,6 +5,7 @@ import com.projects.travelandshare.repository.PlaceRepository;
 import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
+
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import org.mockito.InjectMocks;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.testng.asserts.Assertion;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ class PlaceServiceTest {
     @Test
     void givenPlaces_whenFindAll_thenReturnAllPlace() {
         //Given
-        List <Place> expectedList = new ArrayList<Place>();
+        List <Place> expectedList = new ArrayList<>();
         Place place = new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23);
         Place place1 = new Place("Paris", Counties.PARIS_75, Types.MUSEUM, 0.65, 5.36);
         Place place2 = new Place("Lyon", Counties.RHÔNE_69, Types.ARTGALLERY, 2.35, 5.63);

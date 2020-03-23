@@ -1,7 +1,6 @@
 package com.projects.travelandshare.model.entity;
 
-import com.projects.travelandshare.util.Counties;
-import com.projects.travelandshare.util.Types;
+
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
