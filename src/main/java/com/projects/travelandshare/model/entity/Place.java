@@ -5,6 +5,11 @@ import com.projects.travelandshare.util.Types;
 
 import javax.persistence.*;
 import java.io.Serializable;
+/**
+ * <b>Place Entity</b>
+ * Class that provides the columns to create to our database.
+ * @author Cédric_P
+ * */
 @Entity
 public class Place implements Serializable {
     @Id
@@ -23,15 +28,13 @@ public class Place implements Serializable {
 
     public Place() {
     }
-    public Place(String newName, double newXaxis, double newYaxis, String newPictureName) {
-    }
-    public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis, String newPictureName){
+    public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis){
         this.name=newName;
         this.county=newCounty;
         this.type=newType;
         this.xaxis=newXaxis;
         this.yaxis=newYaxis;
-        this.pictureName=newPictureName;
+
     }
 
     public long getId() {
