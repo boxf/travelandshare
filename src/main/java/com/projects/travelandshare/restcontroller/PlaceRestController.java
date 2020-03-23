@@ -20,8 +20,9 @@ import java.util.List;
  * RestController for Place. It permish to get back the information in the model and communicate with the view
  */
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
-//@CrossOrigin(origins = "http://localhost:4200/")
+
 public class PlaceRestController {
 
     /**
@@ -45,8 +46,8 @@ public class PlaceRestController {
      * @author Dambrine François
      */
     @RequestMapping("/place/{counties}")
-    List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties) {
-        placeList = placeService.findPlaceByCounty(counties);
+    List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
+        List<Place> placeList = placeService.findPlaceByCounty(counties);
         return placeList;
     }
 
@@ -58,11 +59,11 @@ public class PlaceRestController {
      */
     @RequestMapping ("/places")
     public List<Place> getAllPlace() {
-        placeList = placeService.findAllPlace();
+        List<Place> placeList = placeService.findAllPlace();
         return placeList;
     }
 
-    @PostMapping(value = "/addPlaces", consumes ="multipart/form-data")
+    @PostMapping(value = "/place", consumes ="multipart/form-data")
     public ResponseEntity<Object> addNewPlace(@ModelAttribute Place newPlace, @RequestParam(value ="file",
             required = false)MultipartFile file, Model model) throws ConflictException {
         try {
