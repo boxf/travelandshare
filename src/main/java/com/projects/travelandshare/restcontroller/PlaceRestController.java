@@ -63,7 +63,7 @@ public class PlaceRestController {
         return placeList;
     }
 
-    @PostMapping(value = "/addPlaces", consumes ="multipart/form-data")
+    @PostMapping(value = "/place", consumes ="multipart/form-data")
     public ResponseEntity<Object> addNewPlace(@ModelAttribute Place newPlace, @RequestParam(value ="file",
             required = false)MultipartFile file, Model model) throws ConflictException {
         try {
