@@ -26,55 +26,56 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PlaceServiceTest {
-   @InjectMocks
-   PlaceService placeService;
+    @InjectMocks
+    PlaceService placeService;
 
-   @Mock
-   PlaceRepository placeRepository;
+    @Mock
+    PlaceRepository placeRepository;
 
-   @Before
-   public void init(){
-//       MockitoAnnotations.initMocks(this);
-   }
+    @Before
+    public void init(){
+    }
 
     @Test
     void givenNewPlace_whenPlaceDoesntExist_RegisterPlace() {
-        Place place = new Place("Nice",3.2,5.6,"Nice.png");
+        //Given
+        Place place = new Place("Nice",Counties.ALPESMARITIMES_06, Types.BEACH, 3.2,5.6);
+        when(placeRepository.save(place)).thenReturn(place);
 
+        //When
         placeService.registerPlace(place);
 
+        //Then
         verify(placeRepository, times(1)).save(place);
     }
+
     @Test
     void givenNewPlace_whenPlaceExist_ThrowsException() {
-    Place place = new Place("Paris", 3.52, 6.23, "paris.png");
-    Place place2 = new Place("Paris", 3.6, 5.23, "paris2.png");
+        //Given
+        Place mockedPlace = new Place("Paris", Counties.PARIS_75, Types.MUSEUM, 3.52, 6.23);
+        when(placeRepository.findPlaceByName("Paris")).thenReturn(mockedPlace);
 
-    placeService.registerPlace(place);
-    placeService.registerPlace(place2);
-
-    Assertions.assertThrows(ConflictException.class, () -> {
-        place.getName().equals(place2.getName());
-
-    });
+        //When-Then
+        Assertions.assertThrows(ConflictException.class, () -> {
+            Place place2 = new Place("Paris",Counties.PARIS_75,Types.MUSEUM,3.6, 5.23);
+            placeService.registerPlace(place2);
+        });
     }
-    // Le test passe mais ne fonctionne pas en réalité.
+
     @Test
-    void testFindPlaceByCounty() {
-        List <Place> expectedList = new ArrayList<>();
+    void givenPlaces_whenFindByCounties_thenReturnMatchesPlaces() {
+        //Given
         List <Place> countiesList = new ArrayList<>();
-        Place place = new Place("Calanques", Counties.AIN_01, Types.LOWMOUNTAIN,3.50, 4.23, "Calanques.png");
-        Place place1 = new Place("Paris", Counties.AIN_01, Types.MUSEUM, 0.65, 5.36, "Paris.png");
-        Place place2 = new Place("Lyon", Counties.AUBE_10, Types.BEACH, 2.35, 5.63, "Lyon.png");
-        expectedList.add(place);
-        expectedList.add(place1);
+        Place place = new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23);
+        Place place1 = new Place("Marseille", Counties.BOUCHESDURHÔNE_13, Types.MUSEUM, 0.65, 5.36);
         countiesList.add(place);
         countiesList.add(place1);
-        countiesList.add(place2);
+        when(placeRepository.findAllByCounty(Counties.BOUCHESDURHÔNE_13)).thenReturn(countiesList);
 
-        countiesList =  placeRepository.findAllByCounty(Counties.AIN_01);
-        when(placeRepository.findAllByCounty(Counties.AIN_01)).thenReturn(countiesList);
+        //when
+        List<Place> expectedList = placeService.findPlaceByCounty(Counties.BOUCHESDURHÔNE_13);
 
+        //then
         assertEquals(expectedList.size(), StreamSupport.stream(countiesList.spliterator(), false).count());
         if (expectedList.size() != (StreamSupport.stream(countiesList.spliterator(), false).count())){
             fail("Some place are not suppose to be there");
@@ -82,19 +83,21 @@ class PlaceServiceTest {
     }
 
     @Test
-    void testFindAllPlace() {
+    void givenPlaces_whenFindAll_thenReturnAllPlace() {
+        //Given
         List <Place> expectedList = new ArrayList<Place>();
-        Place place = new Place("Calanques", 0.35, 6.52, "Calanques.png");
-        Place place1 = new Place("Paris", 0.65, 5.36, "Paris.png");
-        Place place2 = new Place("Lyon",2.35, 5.63, "Lyon.png");
+        Place place = new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23);
+        Place place1 = new Place("Paris", Counties.PARIS_75, Types.MUSEUM, 0.65, 5.36);
+        Place place2 = new Place("Lyon", Counties.RHÔNE_69, Types.ARTGALLERY, 2.35, 5.63);
         expectedList.add(place);
         expectedList.add(place1);
         expectedList.add(place2);
-
         when(placeRepository.findAll()).thenReturn(expectedList);
 
-       Iterable<Place> testList = placeRepository.findAll();
+        //When
+        Iterable<Place> testList = placeRepository.findAll();
 
+        //Then
         assertEquals(expectedList.size(), StreamSupport.stream(testList.spliterator(), false).count());
         if (expectedList.size() != (StreamSupport.stream(testList.spliterator(), false).count())){
             fail("All the Place aren't return by the method");
