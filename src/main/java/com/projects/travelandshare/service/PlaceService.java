@@ -20,7 +20,8 @@ public class PlaceService {
 
 
     public void registerPlace(Place place) {
-        if (placeRepository.findPlaceByName(place.getName()) == null){
+       Place placeFound = placeRepository.findPlaceByName(place.getName());
+        if (placeFound == null){
             this.placeRepository.save(place);
         }
         else {
