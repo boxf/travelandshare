@@ -6,11 +6,6 @@ import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**
