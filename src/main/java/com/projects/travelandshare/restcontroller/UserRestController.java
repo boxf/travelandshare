@@ -6,13 +6,10 @@ import com.projects.travelandshare.service.exception.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 /**
- * RestController for User. It permish to get back the information in the model and communicate with the view
+ * RestController for User. It permit to get back the information in the model and communicate with the view
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

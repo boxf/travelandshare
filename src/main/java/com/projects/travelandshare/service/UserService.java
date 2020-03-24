@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-//@Slf4j
 public class UserService implements UserDetailsService {
 
    private static UserRepository userRepository;

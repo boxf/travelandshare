@@ -13,7 +13,7 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     @Autowired
     UserService userService;
 
-    public Authentication authenticate (Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth=(UsernamePasswordAuthenticationToken)authentication;
 
         String email = auth.getName();
@@ -24,7 +24,6 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
         if(user==null){
             throw new BadCredentialsException("Username/Password does not match for" + auth.getPrincipal());
         }
-
         return new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
     }
 

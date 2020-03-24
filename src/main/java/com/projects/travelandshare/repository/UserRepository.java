@@ -15,6 +15,7 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
     /**
      *Used to find place thanks to the grade
      *@param email of the user in String

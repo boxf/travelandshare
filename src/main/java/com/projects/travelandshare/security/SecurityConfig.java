@@ -27,13 +27,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userDetailsService;
 
-
+    /**
+     *
+     * @param auth
+     * @throws Exception
+     */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
 
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf()
+    /**
+     *
+     * @param httpSecurity
+     * @throws Exception
+     */
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http403ForbiddenEntryPoint(){})
@@ -45,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and()
                 .logout()
-                .logoutUrl("api/logout")
+                .logoutUrl("/api/logout")
                 .logoutSuccessHandler( new AuthenticationLogoutSuccessHandler())
                 .invalidateHttpSession(true)
                 .and()
@@ -57,18 +66,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private class AuthenticationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
+        /**
+         * Method called when a user has been successfully authenticated
+         * @param request
+         * @param response
+         * @param authentication
+         * @throws IOException
+         * @throws ServletException
+         */
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException{
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
     private class AuthenticationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
-
+        /**
+         * Method called when a user has been successfully logout
+         * @param request
+         * @param response
+         * @param authentication
+         * @throws IOException
+         * @throws ServletException
+         */
         public void onLogoutSuccess (HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException{
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Bean
     public AuthenticationProvider getProvider(){
         AppAuthProvider provider = new AppAuthProvider();
