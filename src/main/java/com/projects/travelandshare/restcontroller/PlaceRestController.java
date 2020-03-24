@@ -17,10 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * RestController for Place. It permish to get back the information in the model and communicate with the view
+ * RestController for Place. It permit to get back the information in the model and communicate with the view
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 
 public class PlaceRestController {
@@ -53,7 +53,7 @@ public class PlaceRestController {
 
     /**
      *
-     * Methode for have the all places in the dataBase. It works with the url ".../api/places"
+     * Method for have the all places in the dataBase. It works with the url ".../api/places"
      * @return a list of all the places on a HTTP page
      * @author Dambrine François
      */
