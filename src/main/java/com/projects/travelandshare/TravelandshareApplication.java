@@ -19,7 +19,7 @@ public class TravelandshareApplication {
         SpringApplication.run(TravelandshareApplication.class, args);
 
     }
-    @Bean
+    /*@Bean
     public CommandLineRunner demo (PlaceService placeService){
         return (args)->{
             placeService.registerPlace(new Place ("CrazyClimbing", Counties.ALPESMARITIMES_06, Types.LOWMOUNTAIN,
@@ -29,5 +29,5 @@ public class TravelandshareApplication {
 
         };
     }
-
+*/
 }
