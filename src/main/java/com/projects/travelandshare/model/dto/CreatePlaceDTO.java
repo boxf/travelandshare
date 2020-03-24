@@ -15,7 +15,7 @@ public class CreatePlaceDTO implements Serializable {
     private float grade;
     private Types type;
     private MultipartFile pictureFile;
-    private String userReview;
+    private String description;
     private double xaxis;
     private double yaxis;
 
@@ -73,12 +73,12 @@ public class CreatePlaceDTO implements Serializable {
         this.pictureFile = pictureFile;
     }
 
-    public String getUserReview() {
-        return userReview;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUserReview(String userReview) {
-        this.userReview = userReview;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getXaxis() {
