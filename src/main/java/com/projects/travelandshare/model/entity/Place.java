@@ -2,6 +2,7 @@ package com.projects.travelandshare.model.entity;
 
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
