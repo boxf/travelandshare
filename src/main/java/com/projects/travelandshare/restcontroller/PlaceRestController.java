@@ -51,7 +51,7 @@ public class PlaceRestController {
     @RequestMapping("/places/{counties}")
     List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
         List<Place> placeList = placeService.findPlaceByCounty(counties);
-       return placeList;
+        return placeList;
     }
 
     /**
@@ -80,9 +80,9 @@ public class PlaceRestController {
     @PostMapping(value = "/place")
     public ResponseEntity<Object> addNewPlace(@ModelAttribute CreatePlaceDTO newPlace) throws ConflictException {
         try {
-                Place newPlaceEntity = placeDTOService.placeDTOCopyPlaceEntity(newPlace);
-                newPlaceEntity = placeService.registerPlace(newPlaceEntity);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
+            Place newPlaceEntity = placeDTOService.placeDTOCopyPlaceEntity(newPlace);
+            newPlaceEntity = placeService.registerPlace(newPlaceEntity);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
