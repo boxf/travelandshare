@@ -1,7 +1,8 @@
 package com.projects.travelandshare.restcontroller;
 
+import com.projects.travelandshare.model.dto.CreatePlaceDTO;
 import com.projects.travelandshare.model.entity.Place;
-import com.projects.travelandshare.repository.PlaceRepository;
+import com.projects.travelandshare.service.PlaceDTOService;
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:4201")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PlaceRestController {
 
     /**
@@ -25,8 +26,10 @@ public class PlaceRestController {
      */
     @Autowired
     private PlaceService placeService;
-    List<Place> placeList;
+    @Autowired
+    private PlaceDTOService placeDTOService;
 
+    List<Place> placeList;
     public PlaceRestController (PlaceService placeService){
         this.placeService=placeService;
     }
@@ -55,11 +58,12 @@ public class PlaceRestController {
         List<Place> placeList = placeService.findAllPlace();
         return placeList;
     }
-    @PostMapping(value = "/places", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> addNewPlace(@RequestBody Place newPlace) throws ConflictException {
+    @PostMapping(value = "/place")
+    public ResponseEntity<Object> addNewPlace(@ModelAttribute CreatePlaceDTO newPlace) throws ConflictException {
         try {
-            placeService.registerPlace(newPlace);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+                Place newPlaceEntity = placeDTOService.placeDTOCopyPlaceEntity(newPlace);
+                newPlaceEntity = placeService.registerPlace(newPlaceEntity);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
