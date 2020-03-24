@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -28,8 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userDetailsService;
 
-    @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -39,23 +36,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .exceptionHandling()
-        .authenticationEntryPoint(new Http403ForbiddenEntryPoint(){})
-        .and()
+                .authenticationEntryPoint(new Http403ForbiddenEntryPoint(){})
+                .and()
                 .authenticationProvider(getProvider())
                 .formLogin()
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/api/login")
                 .successHandler(new AuthenticationLoginSuccessHandler())
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and()
                 .logout()
-                .logoutUrl("/logout")
+                .logoutUrl("api/logout")
                 .logoutSuccessHandler( new AuthenticationLogoutSuccessHandler())
                 .invalidateHttpSession(true)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/logout").permitAll()
-                .antMatchers("/user").authenticated()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/logout").permitAll()
+                .antMatchers("/api/places").authenticated()
                 .anyRequest().permitAll();
     }
 
@@ -72,10 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         }
     }
 
-@Bean
-public AuthenticationProvider getProvider(){
-    AppAuthProvider provider = new AppAuthProvider();
-    provider.setUserDetailsService(userDetailsService);
-    return provider;
-}
+    @Bean
+    public AuthenticationProvider getProvider(){
+        AppAuthProvider provider = new AppAuthProvider();
+        provider.setUserDetailsService(userDetailsService);
+        return provider;
+    }
 }

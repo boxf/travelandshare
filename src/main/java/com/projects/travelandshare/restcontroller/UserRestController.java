@@ -6,6 +6,7 @@ import com.projects.travelandshare.service.exception.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class UserRestController {
      */
     @PostMapping("/user")
     @ResponseBody
-    public ResponseEntity<Object> addNewUser(@RequestBody @Valid User user){
+    public ResponseEntity<Object> addNewUser(@RequestBody User user){
         try{
             userService.userRegister(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();

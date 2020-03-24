@@ -14,12 +14,12 @@ import java.util.Optional;
  *Used to define methods of CRUD type other than those present in CrudRepository
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
     /**
      *Used to find place thanks to the grade
      *@param email of the user in String
      *@return a user
      */
-    Optional<User> findUserByEmail(String email);
+  Optional <User> findUserByEmail(String email);
 
 }

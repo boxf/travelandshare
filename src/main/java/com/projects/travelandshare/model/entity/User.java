@@ -17,7 +17,7 @@ import java.util.Collection;
  * <b>User Entity</b>
  * Class that provides the columns to create to our database.
  * @author Marion Pradeau
- * */
+ */
 @Entity
 public class User implements Serializable, UserDetails {
     @Id
@@ -27,8 +27,6 @@ public class User implements Serializable, UserDetails {
     private String lastName;
     @NotNull
     private String firstName;
-    @NotNull
-    private String userName;
     @NotNull
     @Email
     private String email;
@@ -45,7 +43,6 @@ public class User implements Serializable, UserDetails {
         this.email = email ;
         this.password = password;
     }
-
 
     public long getId() {
         return id;
@@ -90,7 +87,7 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return email;
     }
 
     @Override
