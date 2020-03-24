@@ -6,7 +6,7 @@ import com.projects.travelandshare.service.exception.ConflictException;
 import com.projects.travelandshare.util.Counties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -25,13 +25,14 @@ public class PlaceService {
     private PlaceRepository placeRepository;
     @Autowired
     private StorageService storageService;
+
     List<Place> placeList;
 
 
-    public void registerPlace(Place place) {
+    public Place registerPlace(Place place) {
        Place placeFound = placeRepository.findPlaceByName(place.getName());
         if (placeFound == null){
-            this.placeRepository.save(place);
+            return this.placeRepository.save(place);
         }
         else {
             throw new ConflictException();
@@ -46,7 +47,7 @@ public class PlaceService {
      * @author Dambrine François
      */
     public List<Place> findPlaceByCounty(Counties counties){
-        List<Place> placeList = placeRepository.findAllByCounty(counties);
+        placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
     /**
@@ -56,12 +57,6 @@ public class PlaceService {
      */
     public List<Place> findAllPlace (){
         List<Place> placeList = (List<Place>) placeRepository.findAll();
-        return placeList;
-    }
-
-
-    public List<Place> findPlaceByCounty(Counties counties) {
-        placeList = placeRepository.findAllByCounty(counties);
         return placeList;
     }
 
