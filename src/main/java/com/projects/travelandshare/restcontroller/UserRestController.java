@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class UserRestController {
-
+    /**
+     * Dependencies injection of UserService
+     */
     @Autowired
     UserService userService;
 
@@ -30,9 +32,8 @@ public class UserRestController {
      * If the user is already register with this email address
      * @author Marion Pradeau
      */
-    @PostMapping("/user")
-    @ResponseBody
-    public ResponseEntity<Object> addNewUser(@RequestBody User user){
+    @PostMapping(value ="/user", consumes ="multipart/form-data")
+    public ResponseEntity<Object> addNewUser(@ModelAttribute User user){
         try{
             userService.userRegister(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();

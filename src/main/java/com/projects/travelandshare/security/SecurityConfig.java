@@ -27,20 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userDetailsService;
 
-    /**
-     *
-     * @param auth
-     * @throws Exception
-     */
+//    /**
+//     *
+//     * @param auth
+//     * @throws Exception
+//     */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
     }
 
-    /**
-     *
-     * @param httpSecurity
-     * @throws Exception
-     */
+//    /**
+//     *
+//     * @param httpSecurity
+//     * @throws Exception
+//     */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf()
                 .disable()
@@ -80,23 +80,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private class AuthenticationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
-        /**
-         * Method called when a user has been successfully logout
-         * @param request
-         * @param response
-         * @param authentication
-         * @throws IOException
-         * @throws ServletException
-         */
+//        /**
+//         * Method called when a user has been successfully logout
+//         * @param request
+//         * @param response
+//         * @param authentication
+//         * @throws IOException
+//         * @throws ServletException
+//         */
         public void onLogoutSuccess (HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException{
             response.setStatus(HttpServletResponse.SC_OK);
         }
     }
 
-    /**
-     *
-     * @return
-     */
+//    /**
+//     *
+//     * @return
+//     */
     @Bean
     public AuthenticationProvider getProvider(){
         AppAuthProvider provider = new AppAuthProvider();
