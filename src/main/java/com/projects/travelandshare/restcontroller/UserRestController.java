@@ -39,4 +39,8 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
+    @RequestMapping ("/validateEmail/{email}")
+    public boolean checkEmailExists (@PathVariable("email") String email){
+        return this.userService.checkEmailInDataBase(email);
+    }
 }
