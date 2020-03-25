@@ -1,51 +1,37 @@
-package com.projects.travelandshare.model.entity;
+package com.projects.travelandshare.model.dto;
 
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.Serializable;
-/**
- * <b>Place Entity</b>
- * Class that provides the columns to create to our database.
- * @author Cédric_P
- * */
-@Entity
-public class Place implements Serializable {
-    @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
-    private long id;
+import java.lang.reflect.Type;
+
+
+public class CreatePlaceDTO implements Serializable {
     private String name;
-    @Enumerated(EnumType.STRING)
     private Counties county;
     private float grade;
-    @Enumerated(EnumType.STRING)
     private Types type;
-    private String pictureName;
+    private MultipartFile pictureFile;
     private String description;
     private double xaxis;
     private double yaxis;
 
-    public Place() {
+    public CreatePlaceDTO() {
     }
-    public Place(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis){
+    public CreatePlaceDTO(String newName, double newXaxis, double newYaxis, String newPictureName) {
+    }
+    public CreatePlaceDTO(String newName, Counties newCounty, Types newType, double newXaxis, double newYaxis, MultipartFile newPictureFile){
         this.name=newName;
         this.county=newCounty;
         this.type=newType;
         this.xaxis=newXaxis;
         this.yaxis=newYaxis;
-
+        this.pictureFile=newPictureFile;
     }
 
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -79,12 +65,12 @@ public class Place implements Serializable {
         this.type = type;
     }
 
-    public String getPictureName() {
-        return pictureName;
+    public MultipartFile getPictureFile() {
+        return pictureFile;
     }
 
-    public void setPictureName(String pictureName) {
-        this.pictureName = pictureName;
+    public void setPictureFile(MultipartFile pictureFile) {
+        this.pictureFile = pictureFile;
     }
 
     public String getDescription() {

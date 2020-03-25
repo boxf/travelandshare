@@ -20,7 +20,7 @@ import java.util.List;
  * RestController for Place. It permit to get back the information in the model and communicate with the view
  */
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 
 public class PlaceRestController {
@@ -53,7 +53,7 @@ public class PlaceRestController {
 
     /**
      *
-     * Method for have the all places in the dataBase. It works with the url ".../api/places"
+     * Methode for have the all places in the dataBase. It works with the url ".../api/places"
      * @return a list of all the places on a HTTP page
      * @author Dambrine François
      */
