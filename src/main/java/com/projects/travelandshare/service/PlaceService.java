@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A service classe which defines the required method on Place
+ * A service class which defines the required method on Place
  */
 
 @Service
@@ -36,7 +36,6 @@ public class PlaceService {
         }
         else {
             throw new ConflictException();
-
         }
     }
 
