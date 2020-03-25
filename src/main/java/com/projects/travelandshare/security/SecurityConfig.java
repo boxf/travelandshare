@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author Pradeau Marion
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * Method used by the default implementation of authenticationManager() to attempt to obtain an AuthenticationManager.
      * @param auth AuthenticationManagerBuilder allow for easily building in memory authentication, and adding AuthenticationProviders's.
-     * @throws Exception
+     * @throws Exception if the authentication is not build
      */
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
@@ -38,11 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Method permit to configure the HttpSecurity. csrf().disable() permit to prevent some web attack. AuthenticationProvider permit to perform authentication.
-     * Configuration of Login() : formLogin() specifies to support form based authentication, the URL used for login is determinate in loginProcessingUrl(). successHandler() is call if the authenticate is done, and failureHandler() is call if authenticate failed.
-     * Configuration of logout() : if the logout success invalidation of the session.
-     * Configuration of pages can be access if we are authenticated or not with antMatchers("URL").permitAll() and pages can't be access only if we are authenticated with antMatchers("URL").authenticated()
-     * @param httpSecurity
-     * @throws Exception
+     * Configuration of Login.
+     * Configuration of logout.
+     * Configuration of pages can be access if we are authenticated or not and pages can't be access only if we are authenticated.
+     * @param httpSecurity the HttpSecurity to modify.
+     * @throws Exception The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch.
      */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf()
@@ -71,11 +74,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private class AuthenticationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
         /**
          * Method called when a user has been successfully authenticated
-         * @param request
-         * @param response
-         * @param authentication
-         * @throws IOException
-         * @throws ServletException
+         * @param request the request which caused the successful authentication
+         * @param response the response
+         * @param authentication the Authentication object which was created during the authentication process.
+         * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+         * @throws ServletException Defines a general exception a servlet can throw when it encounters difficulty.
          */
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException{
             response.setStatus(HttpServletResponse.SC_OK);
@@ -85,11 +88,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private class AuthenticationLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
         /**
          * Method called when a user has been successfully logout
-         * @param request
-         * @param response
-         * @param authentication
-         * @throws IOException
-         * @throws ServletException
+         * @param request the request which caused the successful logout
+         * @param response the response
+         * @param authentication the Authentication object which was created during the authentication process.
+         * @throws IOException Signals that an I/O exception of some sort has occurred. This class is the general class of exceptions produced by failed or interrupted I/O operations.
+         * @throws ServletException Defines a general exception a servlet can throw when it encounters difficulty.
          */
         public void onLogoutSuccess (HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException{
             response.setStatus(HttpServletResponse.SC_OK);
@@ -97,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     *
+     * Method permit to create a provider
      * @return provider
      */
     @Bean
