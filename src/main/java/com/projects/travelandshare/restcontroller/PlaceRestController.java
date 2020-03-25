@@ -1,7 +1,9 @@
 package com.projects.travelandshare.restcontroller;
 
+import com.projects.travelandshare.model.dto.CreatePlaceDTO;
 import com.projects.travelandshare.model.entity.Place;
 import com.projects.travelandshare.repository.PlaceRepository;
+import com.projects.travelandshare.service.PlaceDTOService;
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.service.StorageService;
 import com.projects.travelandshare.service.exception.ConflictException;
@@ -31,7 +33,7 @@ public class PlaceRestController {
     @Autowired
     private PlaceService placeService;
     @Autowired
-    private StorageService storageService;
+    private PlaceDTOService placeDTOService;
     List<Place> placeList;
 
     public PlaceRestController (PlaceService placeService){
@@ -63,18 +65,12 @@ public class PlaceRestController {
         return placeList;
     }
 
-    @PostMapping(value = "/place", consumes ="multipart/form-data")
-    public ResponseEntity<Object> addNewPlace(@ModelAttribute Place newPlace, @RequestParam(value ="file",
-            required = false)MultipartFile file, Model model) throws ConflictException {
+    @PostMapping(value = "/place")
+    public ResponseEntity<Object> addNewPlace(@ModelAttribute CreatePlaceDTO newPlace) throws ConflictException {
         try {
-            if(file!= null && !file.isEmpty()){
-                placeService.registerPlace(newPlace, file);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
-            } else {
-                placeService.registerPlace(newPlace);
-                return ResponseEntity.status(HttpStatus.CREATED).build();
-            }
-
+            Place newPlaceEntity = placeDTOService.placeDTOCopyPlaceEntity(newPlace);
+            placeService.registerPlace(newPlaceEntity);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
