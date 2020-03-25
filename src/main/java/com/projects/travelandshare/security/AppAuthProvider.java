@@ -9,11 +9,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collections;
+
 public class AppAuthProvider extends DaoAuthenticationProvider {
     @Autowired
     UserService userService;
 
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate (Authentication authentication) throws AuthenticationException {
         UsernamePasswordAuthenticationToken auth=(UsernamePasswordAuthenticationToken)authentication;
 
         String email = auth.getName();
@@ -21,14 +23,14 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
 
         UserDetails user = userService.loadUserByUsername(email);
 
-        if(user==null){
-            throw new BadCredentialsException("Username/Password does not match for" + auth.getPrincipal());
+        if(user.getUsername().equals(email) && user.getPassword().equals(password)){
+            return new UsernamePasswordAuthenticationToken(email, password, Collections.emptyList());
         }
-        return new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+        throw new BadCredentialsException("Username/Password does not match for" + auth.getPrincipal());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return true;
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
