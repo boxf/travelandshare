@@ -30,6 +30,7 @@ public class UserRestController {
      * @param user we want to register in the data base
      * @throws UserAlreadyExistException
      * If the user is already register with this email address
+     * @return http.status
      * @author Marion Pradeau
      */
     @PostMapping(value ="/user", consumes ="multipart/form-data")

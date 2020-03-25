@@ -49,6 +49,7 @@ public class StorageService {
      * @param fileName this parameter refers to the image name in the uploads file.
      *                 if it exists it is fetched and returned to the ImageController.
      * @throws RuntimeException if the image can't be fetched, then a RuntimeException is thrown
+     * @return resource
      */
     public Resource loadAsResource(String fileName) {
         try {
