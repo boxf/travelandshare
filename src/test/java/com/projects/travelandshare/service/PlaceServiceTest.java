@@ -37,7 +37,7 @@ class PlaceServiceTest {
     }
 
     @Test
-    void givenNewPlace_whenPlaceDoesntExist_RegisterPlace() {
+    void givenNewPlace_whenPlaceDoesntExist_thenRegisterPlace() {
         //Given
         Place place = new Place("Nice",Counties.ALPESMARITIMES_06, Types.BEACH, 3.2,5.6);
         when(placeRepository.save(place)).thenReturn(place);
