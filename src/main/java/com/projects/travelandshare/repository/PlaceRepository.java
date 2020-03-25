@@ -17,7 +17,7 @@ import java.util.List;
 public interface PlaceRepository extends CrudRepository<Place, Long> {
 
  /**
- Used to find place thanks to the grade
+  Used to find place thanks to the grade
   @param grade grade of the place in float
   @return a place
   */
@@ -35,7 +35,7 @@ public interface PlaceRepository extends CrudRepository<Place, Long> {
   * @param counties : enumeration of counties
   * @return a list of places
   */
- List<Place>  findAllByCounty(Counties counties);
+ List<Place> findAllByCounty(Counties counties);
 
  Place findPlaceByName(String name);
 

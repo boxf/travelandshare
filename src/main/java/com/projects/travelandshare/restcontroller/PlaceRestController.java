@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 /**
- * RestController for Place. It permish to get back the information in the model and communicate with the view
+ * RestController for Place. It permit to get back the information in the model and communicate with the view
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")

@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.testng.asserts.Assertion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ class PlaceServiceTest {
         expectedList.add(place);
         expectedList.add(place1);
         expectedList.add(place2);
-        when(placeService.findAllPlace()).thenReturn(expectedList);
+        when(placeRepository.findAll()).thenReturn(expectedList);
 
         //When
         Iterable<Place> testList = placeRepository.findAll();

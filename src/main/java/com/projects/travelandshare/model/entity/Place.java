@@ -3,6 +3,7 @@ package com.projects.travelandshare.model.entity;
 import com.projects.travelandshare.util.Counties;
 import com.projects.travelandshare.util.Types;
 
+
 import javax.persistence.*;
 import java.io.Serializable;
 /**
@@ -22,7 +23,7 @@ public class Place implements Serializable {
     @Enumerated(EnumType.STRING)
     private Types type;
     private String pictureName;
-    private String userReview;
+    private String description;
     private double xaxis;
     private double yaxis;
 
@@ -36,6 +37,7 @@ public class Place implements Serializable {
         this.yaxis=newYaxis;
 
     }
+
 
     public long getId() {
         return id;
@@ -85,12 +87,12 @@ public class Place implements Serializable {
         this.pictureName = pictureName;
     }
 
-    public String getUserReview() {
-        return userReview;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUserReview(String userReview) {
-        this.userReview = userReview;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getXaxis() {
