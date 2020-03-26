@@ -85,7 +85,7 @@ class PlaceServiceTest {
     @Test
     void givenPlaces_whenFindAll_thenReturnAllPlace() {
         //Given
-        List <Place> expectedList = new ArrayList<Place>();
+        List <Place> expectedList = new ArrayList<>();
         Place place = new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23);
         Place place1 = new Place("Paris", Counties.PARIS_75, Types.MUSEUM, 0.65, 5.36);
         Place place2 = new Place("Lyon", Counties.RHÔNE_69, Types.ARTGALLERY, 2.35, 5.63);
