@@ -54,7 +54,7 @@ public class UserService implements UserDetailsService {
 
     public boolean checkEmailInDataBase (String email) {
         Optional<User> user = userRepository.findUserByEmail(email);
-        if(user == null){
+        if(!user.isPresent()){
             return false;
         } else {
             return true;
