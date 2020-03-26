@@ -1,6 +1,7 @@
 package com.projects.travelandshare.restcontroller;
 
 import com.projects.travelandshare.model.entity.User;
+import com.projects.travelandshare.security.AppAuthProvider;
 import com.projects.travelandshare.security.UserAuthenticationService;
 import com.projects.travelandshare.service.UserService;
 import com.projects.travelandshare.service.exception.UserAlreadyExistException;
@@ -8,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+import java.util.Optional;
 
 /**
  * RestController for User. It permit to get back the information in the model and communicate with the view
@@ -16,13 +21,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
-public class UserRestController {
+public class UserRestController{
     /**
      * Dependencies injection of UserService
      */
     @Autowired
     UserService userService;
-    UserAuthenticationService authentication;
+    AppAuthProvider appAuthProvider;
 
     public UserRestController(UserService userService) {
         this.userService = userService;
@@ -45,9 +50,11 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
-    @PostMapping("/login")
-    String login(@RequestParam("username") final String username, @RequestParam ("password") final String password) {
-        return authentication.login(username, password).orElseThrow(()-> new RuntimeException("invalid login and/or password"));
+
+    @PostMapping(value="/login", consumes = "multipart/form-data")
+
+    public Authentication login(@ModelAttribute Authentication authentication) {
+        return appAuthProvider.authenticate(authentication);
     }
 
 }
