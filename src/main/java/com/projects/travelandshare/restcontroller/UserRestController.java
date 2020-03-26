@@ -48,9 +48,4 @@ public class UserRestController {
         }
     }
 
-    @PostMapping("/login")
-    String login(@RequestParam("username") final String username, @RequestParam ("password") final String password) {
-        return authentication.login(username, password).orElseThrow(()-> new RuntimeException("invalid login and/or password"));
-    }
-
 }

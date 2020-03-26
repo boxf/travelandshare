@@ -68,7 +68,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/logout").permitAll()
                 .antMatchers("/api/places").authenticated()
-                .anyRequest().permitAll();
+                .anyRequest().permitAll()
+                .and()
+                .cors();
     }
 
     private class AuthenticationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
