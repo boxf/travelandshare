@@ -69,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(new AuthenticationLogoutSuccessHandler())
                 .invalidateHttpSession(true)
+                .logoutSuccessUrl("/api/login")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/login").permitAll()
