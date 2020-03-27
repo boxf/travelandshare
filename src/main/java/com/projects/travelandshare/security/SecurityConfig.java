@@ -14,9 +14,9 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,14 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception The class Exception and its subclasses are a form of Throwable that indicates conditions that a reasonable application might want to catch.
      */
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf()
+        httpSecurity.cors().and().csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(new Http403ForbiddenEntryPoint(){})
                 .and()
                 .authenticationProvider(getProvider())
                 .formLogin()
-                .loginProcessingUrl("/api/login")
+                .loginProcessingUrl("/api/login").usernameParameter("email")
                 .successHandler(new AuthenticationLoginSuccessHandler())
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
                 .and()
@@ -72,7 +72,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/logout").permitAll()
                 .antMatchers("/api/places").authenticated()
                 .anyRequest().permitAll();
-                httpSecurity.cors();
+
+    }
+    @Bean
+    public WebMvcConfigurer corsConfigurer(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**");
+            }
+        };
     }
 
     private class AuthenticationLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{

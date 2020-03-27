@@ -9,7 +9,7 @@ public interface UserAuthenticationService {
 
     Optional<String> login(String username, String password);
 
-    Optional<User> findBuToken(String Token);
+    Optional<User> findByToken(String Token);
 
     void logout(User user);
 }

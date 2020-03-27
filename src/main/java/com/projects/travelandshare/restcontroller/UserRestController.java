@@ -41,8 +41,19 @@ public class UserRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
+
+    /**
+     * Receives the request from Angular to check if the email already exists in the database
+     * @param email is apssed as the parameter to check in the database
+     * @return passes the email to the userService
+     */
     @RequestMapping ("/validateEmail/{email}")
     public boolean checkEmailExists (@PathVariable("email") String email){
         return this.userService.checkEmailInDataBase(email);
+    }
+    @GetMapping(produces = "application/json")
+    @RequestMapping({"/login"})
+    public String validateLogin(){
+        return "User successfully authenticated";
     }
 }

@@ -15,6 +15,7 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
     @Autowired
     UserService userService;
 
+
     /**
      * Performs authentication with the same contract as AuthenticationManager.authenticate(Authentication)
      * @param authentication - the authentication request object.
@@ -29,10 +30,10 @@ public class AppAuthProvider extends DaoAuthenticationProvider {
 
         UserDetails user = userService.loadUserByUsername(email);
 
-        if(user.getUsername().equals(email) && user.getPassword().equals(password)){
-            return new UsernamePasswordAuthenticationToken(email, password, Collections.emptyList());
+        if(user == null){
+            throw new BadCredentialsException("Username/Password does not match for" + auth.getPrincipal());
         }
-        throw new BadCredentialsException("Username/Password does not match for" + auth.getPrincipal());
+        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 
     /**
