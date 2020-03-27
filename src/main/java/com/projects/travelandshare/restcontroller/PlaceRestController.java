@@ -2,6 +2,7 @@ package com.projects.travelandshare.restcontroller;
 
 import com.projects.travelandshare.model.dto.CreatePlaceDTO;
 import com.projects.travelandshare.model.entity.Place;
+import com.projects.travelandshare.repository.PlaceRepository;
 import com.projects.travelandshare.service.PlaceDTOService;
 import com.projects.travelandshare.service.PlaceService;
 import com.projects.travelandshare.service.StorageService;
@@ -16,10 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * RestController for Place. It permish to get back the information in the model and communicate with the view
+ * RestController for Place. It permit to get back the information in the model and communicate with the view
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -34,7 +34,6 @@ public class PlaceRestController {
     private PlaceService placeService;
     @Autowired
     private PlaceDTOService placeDTOService;
-
     List<Place> placeList;
 
     public PlaceRestController (PlaceService placeService){
@@ -48,22 +47,10 @@ public class PlaceRestController {
      * @return a list of places on a HTTP page
      * @author Dambrine François
      */
-    @RequestMapping("/places/{counties}")
+    @RequestMapping("/place/{counties}")
     List<Place> getPlaceByCounty(@PathVariable("counties") Counties counties){
         List<Place> placeList = placeService.findPlaceByCounty(counties);
         return placeList;
-    }
-
-    /**
-     *
-     * Method that return one place from the DB. It works with the url ".../api/place/id"
-     * @return the place with the corresponding id
-     * @author Boxebeld Frédéric
-     */
-    @RequestMapping("/place/{id}")
-    Optional<Place> getPlaceById(@PathVariable("id") Long id){
-        Optional<Place> place = placeService.findPlaceById(id);
-        return place;
     }
 
     /**
@@ -77,11 +64,12 @@ public class PlaceRestController {
         List<Place> placeList = placeService.findAllPlace();
         return placeList;
     }
+
     @PostMapping(value = "/place")
     public ResponseEntity<Object> addNewPlace(@ModelAttribute CreatePlaceDTO newPlace) throws ConflictException {
         try {
             Place newPlaceEntity = placeDTOService.placeDTOCopyPlaceEntity(newPlace);
-            newPlaceEntity = placeService.registerPlace(newPlaceEntity);
+            placeService.registerPlace(newPlaceEntity);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (ConflictException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
