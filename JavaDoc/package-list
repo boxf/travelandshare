@@ -1,0 +1,9 @@
+com.projects.travelandshare
+com.projects.travelandshare.model.dto
+com.projects.travelandshare.model.entity
+com.projects.travelandshare.repository
+com.projects.travelandshare.restcontroller
+com.projects.travelandshare.security
+com.projects.travelandshare.service
+com.projects.travelandshare.service.exception
+com.projects.travelandshare.util
