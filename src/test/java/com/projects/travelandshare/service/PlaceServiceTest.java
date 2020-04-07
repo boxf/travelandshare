@@ -11,16 +11,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -77,8 +79,8 @@ class PlaceServiceTest {
         List<Place> expectedList = placeService.findPlaceByCounty(Counties.BOUCHESDURHÔNE_13);
 
         //then
-        assertEquals(expectedList.size(), StreamSupport.stream(countiesList.spliterator(), false).count());
-        if (expectedList.size() != (StreamSupport.stream(countiesList.spliterator(), false).count())){
+        assertEquals(expectedList.size(), (long) countiesList.size());
+        if (expectedList.size() != ((long) countiesList.size())){
             fail("Some place are not suppose to be there");
         }
     }
@@ -105,4 +107,23 @@ class PlaceServiceTest {
         }
     }
 
+    @Test
+    void findAllPlace() {
+        when(placeRepository.findAll()).thenReturn(Stream.of(
+                new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23),
+                new Place("Paris", Counties.PARIS_75, Types.MUSEUM, 0.65, 5.36),
+                new Place("Lyon", Counties.RHÔNE_69, Types.ARTGALLERY, 2.35, 5.63))
+                .collect(Collectors.toList()));
+        //Expected outcome
+        assertEquals(3, placeService.findAllPlace().size());
+    }
+
+    @Test
+    void findPlaceById() {
+        long id = 0;
+        when(placeRepository.findById(id)).thenReturn(Optional.of(
+                new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23))
+                );
+        assertTrue(placeService.findPlaceById(id).isPresent());
+    }
 }
