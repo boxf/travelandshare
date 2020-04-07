@@ -124,6 +124,6 @@ class PlaceServiceTest {
         when(placeRepository.findById(id)).thenReturn(Optional.of(
                 new Place("Calanques", Counties.BOUCHESDURHÔNE_13, Types.MEDIUMMOUNTAIN,3.50, 4.23))
                 );
-        assertTrue(placeService.findPlaceById(id).isPresent());
+        assertEquals(id, placeService.findPlaceById(id).get().getId());
     }
 }
