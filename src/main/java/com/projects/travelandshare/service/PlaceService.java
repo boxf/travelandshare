@@ -46,8 +46,7 @@ public class PlaceService {
      * @author Dambrine François
      */
     public List<Place> findPlaceByCounty(Counties counties){
-        placeList = placeRepository.findAllByCounty(counties);
-        return placeList;
+        return placeRepository.findAllByCounty(counties);
     }
     /**
      * Used to find all the places which are in the dataBase
@@ -55,12 +54,10 @@ public class PlaceService {
      * @author Dambrine François
      */
     public List<Place> findAllPlace (){
-        List<Place> placeList = (List<Place>) placeRepository.findAll();
-        return placeList;
+        return (List<Place>) placeRepository.findAll();
     }
 
     public Optional<Place> findPlaceById(Long id) {
-        Optional<Place> place = placeRepository.findById(id);
-        return place;
+        return placeRepository.findById(id);
     }
 }
